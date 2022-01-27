@@ -13,63 +13,65 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(item, i) in todos" :key="i">
+              <tr v-for="item,i in todos" :key="i">
                 <td>{{ item.tache }}</td>
-                <td>{{ item.done == 0 ? "Non fait" : "Fait" }}</td>
+                <td>{{ item.done == 0 ? 'Non fait':'Fait' }}</td>
                 <td>
-                  <!-- <v-simple-checkbox
-                    @click="getcheckboxValue(item.id,i)"
+                    <v-simple-checkbox
+                    @click="getcheckboxValue(item.id,i,item.done)"
                     :ripple="false"
-                    v-model="updatedStat.done"
+                    v-model="item.done"
                     >
                         
-                    </v-simple-checkbox> -->
-                  <v-btn elevation="2" 
-                  @click="getcheckboxValue(item.id,i)"
-                  icon>
-                    <v-icon>mdi-cached</v-icon>
-                  </v-btn>
+                    </v-simple-checkbox>
                 </td>
               </tr>
             </tbody>
           </template>
         </v-simple-table>
       </div>
+        <div>
+            <AddTacheModal />
+        </div>
     </div>
   </div>
 </template>
 <script>
 import SideBar from "../components/sideBar.vue";
 import { mapFields } from "vuex-map-fields";
-import axios from "axios";
-
+import axios from 'axios';
+import AddTacheModal from '../components/AddTacheModal.vue'
 export default {
   name: "Taches",
   components: {
-    SideBar,
+    SideBar,AddTacheModal
   },
   mounted() {
     this.$store.dispatch("getTodos");
+    // this.todos[this.arrIndex].done == 0 ? this.updatedStat.done=false : this.updatedStat.done=true
   },
   data() {
     return {
-      todoID: "",
-      arrIndex: 0,
+      
+      todoID: "" ,
+      arrIndex:0,
       updatedStat: {
-        done: this.todos[this.arrIndex].done == 0 ? true : false 
+          done: false
       },
     };
   },
   methods: {
-    getcheckboxValue(value, index) {
-      console.log(value);
-      console.log(index);
-      this.arrIndex = index;
-      this.todoID = value;
-      this.updateTodoStatus();
-    },
+      getcheckboxValue(value,index,done){
+          console.log(value);
+          console.log(index);
+          console.log(done);
+          this.updatedStat.done=done
+          this.arrIndex=index
+          this.todoID=value;
+          this.updateTodoStatus()
+      },
 
-    //Update la valeur du done dans la DB
+      //Update la valeur du done dans la DB
     updateTodoStatus() {
       axios
         .put(
@@ -83,29 +85,28 @@ export default {
         )
         .then((response) => {
           console.log(response.data);
-          // this.$store.dispatch("getEntrepriseInfos");
-          this.$toast.success("Status modifiés avec succès");
-          this.$store.dispatch("getTodos");
+        // this.$store.dispatch("getEntrepriseInfos");
+        this.$toast.success("Status modifiés avec succès")
+        this.$store.dispatch("getTodos");
+
         })
         .catch((error) => {
           console.log(error.response);
-          this.$toast.error("Status non modifiés");
+        this.$toast.error("Status non modifiés")
+
         });
     },
+
   },
   computed: {
-    ...mapFields(["todos", "token2"]),
-    // shift(){
-
-    //    return  this.todos.map(element => {
-
-    //     if (element.done == 0) {
-
-    //         return true
-    //     }else{
+    ...mapFields(["todos","token2"]),
+    // zeroTofalse(){
+    //     if (this.todos.done == 0) {
+            
     //         return false
+    //     }else{
+    //         return true
     //     }
-    //      });
     // }
   },
 };
