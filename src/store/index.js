@@ -30,7 +30,8 @@ export default new Vuex.Store({
       activiteEntreprise:""
     },
     entInfo:{},
-    todos:[]
+    todos:[],
+    messageList:""
   },
   mutations: {
     updateField,
@@ -40,6 +41,9 @@ export default new Vuex.Store({
     },
     updateTodos(state,res){
       state.todos=res
+    },
+    updateMessages(state,res){
+      state.messageList=res
     }
 
   },
@@ -70,6 +74,21 @@ export default new Vuex.Store({
         .then((response) => {
         console.log(response.data.data)
           commit("updateTodos",response.data.data)
+      
+        });
+    },
+    //Les messages que l'entreprise a envoyé à l'admin
+    getMessages({commit,state}) {
+      axios
+        .get(`http://127.0.0.1:8000/api/dashboard/messageList/`, {
+        // .get(`http://127.0.0.1:8000/api/dashboard/messageList/${state.entInfo.id}`, {
+          headers: {
+            "Authorization": "Bearer " + state.token2
+          },
+        })
+        .then((response) => {
+        console.log(response.data.data)
+          commit("updateMessages",response.data.data)
       
         });
     },

@@ -100,14 +100,6 @@ export default {
   },
   computed: {
     ...mapFields(["todos","token2"]),
-    // zeroTofalse(){
-    //     if (this.todos.done == 0) {
-            
-    //         return false
-    //     }else{
-    //         return true
-    //     }
-    // }
   },
 };
 </script>
