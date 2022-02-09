@@ -99,7 +99,6 @@ export default {
         )
         .then((response) => {
           console.log(response.data);
-          // this.$store.dispatch("getEntrepriseInfos");
           this.$toast.success(response.data.message);
           this.$store.dispatch("getMessages");
           this.messageToAdmin.message=""
@@ -112,6 +111,13 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getMessages");
+    
+    //Le broadcast
+    window.Echo.channel('MessageChannel')
+    .listen('WebsocketMessagesEvent', (e) => {
+        console.log(e);
+        this.$store.state.messageList.push(e.message)
+    });
   },
   computed: {
     ...mapFields(["messageList", "token2"]),
