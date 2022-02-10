@@ -33,15 +33,13 @@
                       <span class="time_date">{{ msg.sentAt }}</span>
                     </div>
                   </div>
-
                   <!-- @endif
                     @endforeach -->
                 </div>
               </div>
               <div class="type_msg">
                 <div class="input_msg_write">
-                  <!-- <form action="/admin/addMessage" method="post">
-                            @csrf -->
+                   <form @submit.prevent="sendMessage">
                   <v-text-field
                     v-model="messageToAdmin.message"
                     name="message"
@@ -50,16 +48,15 @@
                     placeholder="Type a message"
                   ></v-text-field>
 
-                  <!-- </form> -->
                   <button
-                    @click="sendMessage"
                     class="msg_send_btn"
-                    type="button"
+                    type="submit"
                   >
                     <v-icon large color="blue darken-2">
                       mdi-message-text
                     </v-icon>
                   </button>
+                  </form>
                 </div>
               </div>
             </div>
@@ -83,6 +80,7 @@ export default {
       messageToAdmin: {
         message: "",
       },
+      messageArr: this.messageList
     };
   },
   methods: {
@@ -115,9 +113,12 @@ export default {
     //Le broadcast
     window.Echo.channel('MessageChannel')
     .listen('WebsocketMessagesEvent', (e) => {
-        console.log(e);
-        this.$store.state.messageList.push(e.message)
+      console.log("Event ",e);
+        this.messageList.push(e.message)
+            // this.$store.dispatch("getMessages");
+        // this.$toast.success("Vous avez recu un nouveau message");
     });
+
   },
   computed: {
     ...mapFields(["messageList", "token2"]),

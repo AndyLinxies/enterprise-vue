@@ -1,10 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      dark
-    >
+    <v-app-bar app color="primary" dark>
       <div class="d-flex align-center">
         <v-img
           alt="Vuetify Logo"
@@ -26,15 +22,22 @@
       </div>
 
       <v-spacer></v-spacer>
-      
-      <RegisterModal />
-      <LoginModal />
-      <Stepper />
-    
+      <div class="flex w-0">
+        <RegisterModal />
+        <LoginModal />
+        <v-btn v-if="token2 !='' " class="mt-3" color="gray">
+          <router-link to="/dashboard/profile">
+          Dashboard 
+          </router-link>
+        </v-btn>
+        <Stepper />
+        <!-- Notif -->
+        <Notification />
+      </div>
     </v-app-bar>
 
     <v-main>
-      <router-view/>
+      <router-view />
     </v-main>
   </v-app>
 </template>
@@ -43,20 +46,29 @@
 import Vue from "vue";
 import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
-import RegisterModal from '../src/components/RegisterModal.vue'
-import LoginModal from '../src/components/LoginModal.vue'
-import Stepper from '../src/components/Stepper.vue'
+import RegisterModal from "../src/components/RegisterModal.vue";
+import LoginModal from "../src/components/LoginModal.vue";
+import Stepper from "../src/components/Stepper.vue";
+import Notification from "../src/components/Notification.vue";
+import { mapFields } from "vuex-map-fields";
+
 
 Vue.use(Toast, {
   transition: "Vue-Toastification__bounce",
   maxToasts: 20,
-  newestOnTop: true
+  newestOnTop: true,
 });
 
 export default {
-  name: 'App',
-  components:{
-    RegisterModal,LoginModal,Stepper
+  name: "App",
+  components: {
+    RegisterModal,
+    LoginModal,
+    Stepper,
+    Notification,
+  },
+  computed: {
+    ...mapFields(['token2'])
   },
 
   data: () => ({

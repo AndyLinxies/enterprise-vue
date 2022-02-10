@@ -16,7 +16,7 @@ export default new Vuex.Store({
     token:"",
     token2:"",
     userID:"",
-    dialog:false,
+    dialogLogin:false,
     userInfo:"",
     stepperDialog:false,
     entreprise:{
@@ -31,7 +31,7 @@ export default new Vuex.Store({
     },
     entInfo:{},
     todos:[],
-    messageList:""
+    messageList:[]
   },
   mutations: {
     updateField,

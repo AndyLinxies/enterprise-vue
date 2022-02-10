@@ -7,7 +7,7 @@
       transition="dialog-bottom-transition"
     >
       <template v-slot:activator="{ on, attrs }">
-        <v-btn color="primary" dark v-bind="attrs" v-on="on">
+        <v-btn color="primary" class="hidden" dark v-bind="attrs" v-on="on">
           Open Dialog
         </v-btn>
       </template>
@@ -82,7 +82,7 @@
                   disabled
                 ></v-text-field>
               </v-card>
-              <v-btn v-if="showContinueBtn" color="primary"  @click="e6 = 2"> Continue </v-btn>
+              <v-btn color="primary"  @click="e6 = 2"> Continue </v-btn>
             </v-stepper-content>
             <!-- Step 2 -->
             <v-stepper-step :complete="e6 > 2" step="2">
@@ -143,6 +143,8 @@ export default {
           this.entreprise.villeEntreprise=response.data.address.city
           this.entreprise.paysEntreprise=response.data.address.country
           this.entreprise.codePostalEntreprise=response.data.address.zip_code
+          this.$router.push('/dashboard/profile')
+
       })
       },
 

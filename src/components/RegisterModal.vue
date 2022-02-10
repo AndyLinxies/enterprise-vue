@@ -2,7 +2,7 @@
   <v-row justify="center">
     <v-dialog v-model="dialog" persistent max-width="600px">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn class="mt-5" color="purple darken-2" dark v-bind="attrs" v-on="on">
+        <v-btn class="mt-6" color="purple darken-2" dark v-bind="attrs" v-on="on">
           Register
         </v-btn>
       </template>
@@ -92,10 +92,10 @@ export default {
             console.log(response.data);
             this.successMessage = response.data.message;
             this.token = response.data.token;
-            this.dialog = true;
-            
+            this.dialog = false;
+            this.dialogLogin = true;
             this.$toast.success("You are registered ")
-
+            
           })
           .catch((error) => {
             console.log(error);
@@ -113,7 +113,8 @@ export default {
       "password",
       "userID",
       "token",
-      "token2"
+      "token2",
+      "dialogLogin"
     ]),
   },
 };
