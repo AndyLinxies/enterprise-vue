@@ -31,7 +31,8 @@ export default new Vuex.Store({
     },
     entInfo:{},
     todos:[],
-    messageList:[]
+    messageList:[],
+    stepperSubmited:false
   },
   mutations: {
     updateField,
@@ -98,6 +99,8 @@ export default new Vuex.Store({
   },
   //persisted State. Mets tout dans le local storage de base
   //Rajouter {paths: ['NomduData']} dans la parenthese pour specifier
-  plugins: [createPersistedState()],
+  plugins: [createPersistedState({
+    paths: ['token2','userID']
+  })],
 
 })

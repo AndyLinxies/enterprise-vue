@@ -25,19 +25,20 @@
       <div class="flex w-0">
         <RegisterModal />
         <LoginModal />
-        <v-btn v-if="token2 !='' " class="mt-3" color="gray">
+        <Logout />
+        <v-btn v-if="stepperSubmited" class="mt-3" color="gray">
           <router-link to="/dashboard/profile">
           Dashboard 
           </router-link>
         </v-btn>
         <Stepper />
         <!-- Notif -->
-        <Notification />
+        <Notification v-if="stepperSubmited" />
       </div>
     </v-app-bar>
 
     <v-main>
-      <router-view />
+    <router-view :key="$route.path"></router-view>
     </v-main>
   </v-app>
 </template>
@@ -51,7 +52,7 @@ import LoginModal from "../src/components/LoginModal.vue";
 import Stepper from "../src/components/Stepper.vue";
 import Notification from "../src/components/Notification.vue";
 import { mapFields } from "vuex-map-fields";
-
+import Logout from '../src/components/Logout.vue'
 
 Vue.use(Toast, {
   transition: "Vue-Toastification__bounce",
@@ -66,11 +67,15 @@ export default {
     LoginModal,
     Stepper,
     Notification,
+    Logout
   },
   computed: {
-    ...mapFields(['token2'])
+    ...mapFields(['token2',"stepperSubmited","entreprise","entInfo"])
   },
-
+mounted() {
+  // console.log("hello");
+  console.log(this.$route.path);
+},
   data: () => ({
     //
   }),

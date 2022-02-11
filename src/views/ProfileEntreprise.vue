@@ -41,6 +41,7 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getEntrepriseInfos");
+    console.log(this.entInfo);
   },
   computed: {
     ...mapFields(["entInfo"]),

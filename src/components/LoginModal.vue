@@ -2,7 +2,7 @@
   <v-row justify="center">
     <v-dialog v-model="dialogLogin" persistent max-width="600px">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn @click="redirect" color="success" dark v-bind="attrs" v-on="on"> Login </v-btn>
+        <v-btn color="success" dark v-bind="attrs" v-on="on"> Login </v-btn>
       </template>
       <v-card>
         <v-card-title>
@@ -88,14 +88,15 @@ export default {
     },
     //Si on est déja connecté il nous envoit vers le dashboard. Sinon on voit le modal de connection
     redirect() {
-      // if (this.entreprise.nrTVA =="") {
-      //   this.stepperDialog = true;
-      //   this.$toast.success("Please Register your Society ");
-      //   this.dialogLogin=false
-      // } else {
+      if (this.entreprise.nrTVA ==null) {
+        console.log(this.entreprise);
+        this.stepperDialog = true;
+        this.$toast.success("Please Register your Society ");
+        this.dialogLogin=false
+       }  //else {
+      //   console.log("else");
       //   this.dialogLogin=false
       //   this.stepperDialog = false;
-
       //   this.$router.push("/dashboard/profile");
       // }
     },

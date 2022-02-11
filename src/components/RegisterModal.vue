@@ -90,12 +90,14 @@ export default {
           )
           .then((response) => {
             console.log(response.data);
+            console.log(this.password);
+
             this.successMessage = response.data.message;
             this.token = response.data.token;
             this.dialog = false;
             this.dialogLogin = true;
             this.$toast.success("You are registered ")
-            
+
           })
           .catch((error) => {
             console.log(error);

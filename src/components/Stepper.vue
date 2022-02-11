@@ -162,8 +162,8 @@ export default {
       .then((response) => {
         console.log(response.data);
         this.stepperDialog = false
+        this.stepperSubmited=true
         this.$router.push('/dashboard/profile');
-
       })
       .catch((error) => {
         console.log(error.response);
@@ -173,7 +173,7 @@ export default {
 
   },
   computed: {
-    ...mapFields(["stepperDialog", "entreprise","token2"]),
+    ...mapFields(["stepperDialog", "entreprise","token2","stepperSubmited"]),
     showContinueBtn(){
         return this.entreprise.nrTVA  && this.entreprise.nomEntreprise && this.entreprise.adresseEntreprise && this.entreprise.villeEntreprise && this.entreprise.paysEntreprise && this.entreprise.codePostalEntreprise && this.entreprise.phoneEntreprise && this.entreprise.activiteEntreprise
     }
